@@ -15,7 +15,7 @@ logs:
 	$(COMPOSE) logs -f
 
 reseed:
-	$(COMPOSE) run --rm api dotnet run -- --seed
+	$(COMPOSE) run --rm api dotnet LexiFlow.Api.dll --seed
 
 test smoke:
 	$(COMPOSE) run --rm tester /infra/test/smoke.sh

@@ -111,10 +111,17 @@ services:
         condition: service_healthy
       frontend:
         condition: service_healthy
-    command: ["/infra/test/smoke.sh"]
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        if [ "${TEST_ON_START}" = "true" ]; then
+          /infra/test/smoke.sh;
+        else
+          echo "Smoke test skipped (set TEST_ON_START=true to enable).";
+        fi
+    restart: "no"
     networks:
       - appnet
-    profiles: ["test"]
 
 networks:
   appnet:
