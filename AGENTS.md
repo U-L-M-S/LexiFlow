@@ -11,6 +11,7 @@
 - `make up | make down | make logs` : convenience targets for lifecycle management; `make reseed` replays database seeding.
 - `make test` (alias for `docker compose run --rm tester /infra/test/smoke.sh`) executes the end-to-end smoke flow.
 - Local service checks: `dotnet test` inside `api/`, `npm run test` and `npm run lint` inside `frontend/`, `pytest` inside `ocr/`.
+- Troubleshooting tweaks already applied: container healthchecks require `curl` (bundled in API/OCR/LexMock images) and JWT secret must be at least 32 chars; update `.env` accordingly.
 
 ## Coding Style & Naming Conventions
 - C# follows .NET defaults: 4-space indents, `PascalCase` for classes, `camelCase` for locals, `IInterface` prefix for interfaces. Run `dotnet format` before committing.
@@ -31,3 +32,4 @@
 - Copy `.env.example` to `.env`, override sensitive values locally, and keep secrets out of version control. Document defaults in the example file.
 - JWT signing keys, database passwords, and the `LEXOFFICE_API_KEY` must be provided via environment variables or Docker secrets.
 - Limit CORS origins to the bundled frontend (`http://localhost:${FRONTEND_PORT}`) and rotate sample credentials if leaking outside demos.
+- When mirroring `.env.example`, ensure `JWT_SECRET` is ≥32 characters; smoke tests expect that length and will 500 otherwise.
