@@ -18,6 +18,7 @@ coverage/
 # Python cache
 __pycache__/
 *.pyc
+*.tsbuildinfo
 
 # Logs
 *.log
