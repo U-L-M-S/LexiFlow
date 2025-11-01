@@ -1,0 +1,16 @@
+@host = http://localhost:8081
+
+### Healthcheck
+GET {{host}}/healthz
+Accept: application/json
+
+###
+
+### Login
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "demo",
+  "password": "demo123!"
+}

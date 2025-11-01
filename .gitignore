@@ -13,6 +13,7 @@ coverage/
 .vscode/
 .idea/
 *.user
+.dotnet/
 
 # Python cache
 __pycache__/
