@@ -1,4 +1,20 @@
-# Placeholder Dockerfile for the LexOffice mock service.
-FROM python:3.12-slim AS placeholder
+FROM python:3.12-slim
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1
+
 WORKDIR /app
-CMD ["bash", "-c", "echo 'LexMock container scaffold pending.' && sleep infinity"]
+
+COPY requirements.txt ./
+RUN pip install --upgrade pip \
+    && pip install -r requirements.txt
+
+COPY app ./app
+
+ENV LEXOFFICE_API_KEY=demo-lexoffice-key \
+    LEXOFFICE_CURRENCY=EUR
+
+EXPOSE 80
+
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
